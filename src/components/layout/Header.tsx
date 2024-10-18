@@ -3,12 +3,13 @@ import { createSignal } from 'solid-js';
 // src/components/Header.tsx
 const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);
+  const [activeSection] = createSignal('about'); // Declare activeSection state
 
   return (
-    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
-      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 py-12">
+      <div class="container mx-auto px-4 flex justify-between items-center">
         <a href="#" class="text-2xl font-bold text-gray-900 dark:text-white">
-          MyPortfolio
+          F I D E L E
         </a>
 
         {/* Hamburger Icon */}
@@ -36,26 +37,40 @@ const Header = () => {
         <nav
           class={`${
             isOpen() ? 'block' : 'hidden'
-          } md:flex space-x-8 items-center md:space-x-6 text-gray-900 dark:text-white`}
+          } md:flex md:space-x-8 items-center text-gray-900 dark:text-white`}
         >
-          <a
-            href="#about"
-            class="hover:text-indigo-500 dark:hover:text-indigo-300"
-          >
-            About
-          </a>
-          <a
-            href="#projects"
-            class="hover:text-indigo-500 dark:hover:text-indigo-300"
-          >
-            Projects
-          </a>
-          <a
-            href="#contact"
-            class="hover:text-indigo-500 dark:hover:text-indigo-300"
-          >
-            Contact
-          </a>
+          <div class="flex flex-col md:flex-row md:items-center md:space-x-6">
+            <a
+              href="#about"
+              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
+                activeSection() === 'about'
+                  ? 'text-indigo-500 dark:text-indigo-300'
+                  : ''
+              }`}
+            >
+              About
+            </a>
+            <a
+              href="#projects"
+              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
+                activeSection() === 'projects'
+                  ? 'text-indigo-500 dark:text-indigo-300'
+                  : ''
+              }`}
+            >
+              Projects
+            </a>
+            <a
+              href="#contact"
+              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
+                activeSection() === 'contact'
+                  ? 'text-indigo-500 dark:text-indigo-300'
+                  : ''
+              }`}
+            >
+              Contact
+            </a>
+          </div>
         </nav>
       </div>
     </header>
