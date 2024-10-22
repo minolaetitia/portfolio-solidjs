@@ -1,11 +1,10 @@
+import About from '../pages/About';
+
 const Main = () => {
   return (
-    <main class="container mx-auto px-4 py-8">
-      <section id="about" class="my-8">
-        <h2 class="text-3xl font-bold mb-4">About Me</h2>
-        <p class="text-gray-700 dark:text-gray-300">
-          Introduction and details about you...
-        </p>
+    <main class="container mx-auto px-4 py-4">
+      <section id="about" class="my-3">
+        <About />
       </section>
 
       <section id="projects" class="my-8">

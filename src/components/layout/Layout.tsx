@@ -1,7 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import Footer from './Footer';
 import Header from './Header';
-import { M } from 'vite/dist/node/types.d-aGj9QkWt';
 import Main from './Main';
 
 const Layout = () => {

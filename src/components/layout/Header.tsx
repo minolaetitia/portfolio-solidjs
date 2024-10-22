@@ -1,78 +1,45 @@
-import { createSignal } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-// src/components/Header.tsx
-const Header = () => {
-  const [isOpen, setIsOpen] = createSignal(false);
-  const [activeSection] = createSignal('about'); // Declare activeSection state
+const Header: Component = () => {
+  const [isMenuOpen, setIsMenuOpen] = createSignal(false);
 
   return (
-    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 py-12">
-      <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="#" class="text-2xl font-bold text-gray-900 dark:text-white">
-          F I D E L E
-        </a>
+    <header class="bg-base-100 shadow-md sticky top-0 z-50">
+      <div class="container mx-auto p-4 flex justify-between items-center">
+        {/* Logo */}
+        <div class="text-primary text-3xl font-bold">
+          <a href="#">MyLogo</a>
+        </div>
 
-        {/* Hamburger Icon */}
-        <button
-          class="md:hidden text-gray-900 dark:text-white focus:outline-none"
-          onClick={() => setIsOpen(!isOpen())}
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d={!isOpen() ? 'M4 6h16M4 12h16m-7 6h7' : 'M6 18L18 6M6 6l12 12'}
-            />
-          </svg>
-        </button>
-
-        {/* Nav Links */}
-        <nav
-          class={`${
-            isOpen() ? 'block' : 'hidden'
-          } md:flex md:space-x-8 items-center text-gray-900 dark:text-white`}
-        >
-          <div class="flex flex-col md:flex-row md:items-center md:space-x-6">
-            <a
-              href="#about"
-              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
-                activeSection() === 'about'
-                  ? 'text-indigo-500 dark:text-indigo-300'
-                  : ''
-              }`}
-            >
-              About
-            </a>
-            <a
-              href="#projects"
-              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
-                activeSection() === 'projects'
-                  ? 'text-indigo-500 dark:text-indigo-300'
-                  : ''
-              }`}
-            >
-              Projects
-            </a>
-            <a
-              href="#contact"
-              class={`hover:text-indigo-500 dark:hover:text-indigo-300 ${
-                activeSection() === 'contact'
-                  ? 'text-indigo-500 dark:text-indigo-300'
-                  : ''
-              }`}
-            >
-              Contact
-            </a>
-          </div>
+        {/* Navigation - Hidden on small screens */}
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a href="#home" class="hover:text-primary">Home</a>
+          <a href="#about" class="hover:text-primary">About</a>
+          <a href="#services" class="hover:text-primary">Services</a>
+          <a href="#contact" class="hover:text-primary">Contact</a>
         </nav>
+
+        {/* Hamburger Menu - Visible on small screens */}
+        <div class="md:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen())} class="text-primary text-2xl">
+            {/* <FontAwesomeIcon icon={isMenuOpen() ? faTimes : faBars} /> */}
+            {isMenuOpen() ? <i class="fa-solid fa-mobile"></i> : <i class="fa-solid fa-laptop"></i>}
+            
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen() && (
+        <nav class="md:hidden bg-base-100 p-4 space-y-4">
+          <a href="#home" class="block text-lg hover:text-primary">Home</a>
+          <a href="#about" class="block text-lg hover:text-primary">About</a>
+          <a href="#services" class="block text-lg hover:text-primary">Services</a>
+          <a href="#contact" class="block text-lg hover:text-primary">Contact</a>
+        </nav>
+      )}
     </header>
   );
 };
