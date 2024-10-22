@@ -8,5 +8,5 @@ module.exports = {
     extend: {},
   },
   darkMode: 'class', // Activer le dark mode basé sur la classe
-  plugins: [],
+  plugins: [require('daisyui')],
 };
