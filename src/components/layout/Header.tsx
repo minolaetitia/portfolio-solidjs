@@ -1,32 +1,66 @@
-import { Component, createSignal } from 'solid-js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Component, createEffect, createSignal, onCleanup } from "solid-js";
 
 const Header: Component = () => {
   const [isMenuOpen, setIsMenuOpen] = createSignal(false);
+  const [isNavbarVisible, setIsNavbarVisible] = createSignal(true);
+  let lastScrollY = window.scrollY;
+
+  const handleScroll = () => {
+    if (window.scrollY > lastScrollY) {
+      // Si on défile vers le bas, on cache le navbar
+      setIsNavbarVisible(false);
+    } else {
+      // Si on défile vers le haut, on affiche le navbar
+      setIsNavbarVisible(true);
+    }
+    lastScrollY = window.scrollY;
+  };
+
+  createEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    onCleanup(() => window.removeEventListener("scroll", handleScroll));
+  });
 
   return (
-    <header class="bg-base-100 shadow-md sticky top-0 z-50">
-      <div class="container mx-auto p-4 flex justify-between items-center">
+    <nav
+      class={`${
+        isNavbarVisible() ? "translate-y-0 bg-inherit" : "-translate-y-full"
+      }  sticky top-0 bg-slate-900 shadow-md
+       transition-transform duration-300 z-50`}
+    >
+      <div class="container mx-auto p-4 py-8 flex justify-between items-center">
         {/* Logo */}
-        <div class="text-primary text-3xl font-bold">
+        <div class="text-purple-500 text-3xl font-bold">
           <a href="#">MyLogo</a>
         </div>
 
         {/* Navigation - Hidden on small screens */}
         <nav class="hidden md:flex space-x-6 text-lg">
-          <a href="#home" class="hover:text-primary">Home</a>
-          <a href="#about" class="hover:text-primary">About</a>
-          <a href="#services" class="hover:text-primary">Services</a>
-          <a href="#contact" class="hover:text-primary">Contact</a>
+          {[
+            { href: "#home", label: "Home" },
+            { href: "#about", label: "About" },
+            { href: "#skills", label: "Skills" },
+            { href: "#experiences", label: "Experiences" },
+            { href: "#education", label: "Educations" },
+            { href: "#services", label: "Services" },
+            { href: "#contact", label: "Contact" },
+          ].map((link) => (
+            <a
+              href={link.href}
+              class="text-xl text-gray-800 dark:text-gray-400 dark:hover:text-purple-500"
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
 
         {/* Hamburger Menu - Visible on small screens */}
         <div class="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen())} class="text-primary text-2xl">
-            {/* <FontAwesomeIcon icon={isMenuOpen() ? faTimes : faBars} /> */}
-            {isMenuOpen() ? <i class="fa-solid fa-mobile"></i> : <i class="fa-solid fa-laptop"></i>}
-            
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen())}
+            class="text-primary text-2xl"
+          >
+            <i class="fa fa-list"></i>
           </button>
         </div>
       </div>
@@ -34,13 +68,25 @@ const Header: Component = () => {
       {/* Mobile Menu */}
       {isMenuOpen() && (
         <nav class="md:hidden bg-base-100 p-4 space-y-4">
-          <a href="#home" class="block text-lg hover:text-primary">Home</a>
-          <a href="#about" class="block text-lg hover:text-primary">About</a>
-          <a href="#services" class="block text-lg hover:text-primary">Services</a>
-          <a href="#contact" class="block text-lg hover:text-primary">Contact</a>
+          {[
+            { href: "#home", label: "Home" },
+            { href: "#about", label: "About" },
+            { href: "#skills", label: "Skills" },
+            { href: "#experiences", label: "Experiences" },
+            { href: "#education", label: "Educations" },
+            { href: "#services", label: "Services" },
+            { href: "#contact", label: "Contact" },
+          ].map((link) => (
+            <a
+              href={link.href}
+              class="block text-lg text-xl text-gray-800 dark:text-gray-400 dark:hover:text-purple-500"
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
       )}
-    </header>
+    </nav>
   );
 };
 

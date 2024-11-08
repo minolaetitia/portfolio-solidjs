@@ -1,14 +1,35 @@
-import 'tailwindcss/tailwind.css';
-import Footer from './Footer';
-import Header from './Header';
-import Main from './Main';
+import "tailwindcss/tailwind.css";
+import Footer from "./Footer";
+import Header from "./Header";
+import Main from "./Main";
+import Home from "./Home";
+import Experiences from "../pages/Experiences";
 
 const Layout = () => {
   return (
-    <div class="app bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col justify-between">
+    <div>
       <Header />
-      <Main />
-      <Footer />
+      <main class="px-10 flex-grow items-center justify-center">
+        <section id="home" class="z-10">
+          <Home />
+        </section>
+
+        <section id="experiences" class="z-10">
+          <div class="flex">
+            <div>
+              <Experiences />
+            </div>
+
+            <div>
+              <Experiences />
+            </div>
+
+            <div>
+              <Experiences />
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
